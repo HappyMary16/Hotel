@@ -1,0 +1,87 @@
+<%--=========================================================================== 
+Header (top area). 
+===========================================================================--%> 
+
+<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+
+<tr>
+<td id="header">
+
+<c:if test="${not empty user}">
+<%--=========================================================================== 
+This is the user menu. 
+===========================================================================--%> 
+
+<div id="leftHeader">
+
+<%--===========================================================================
+This way we define the ADMIN MENU.
+===========================================================================--%>
+    <c:choose>
+		<c:when test="${userRole == 'ADMIN' }">
+			<a href="controller?command=listOrders">
+				<fmt:message key="header_jspf.anchor.all_orders" bundle="${lang}"/>
+			</a> &nbsp;
+		</c:when>
+
+
+<%--===========================================================================
+This way we define the USER MENU.
+===========================================================================--%>
+		<c:when test="${userRole == 'USER'}">
+			<a href="controller?command=openChooseDates">
+				<fmt:message key="header_jspf.anchor.order" bundle="${lang}"/>
+			</a> &nbsp;
+			<a href="controller?command=listClientOrders">
+				<fmt:message key="header_jspf.anchor.client_order" bundle="${lang}"/>
+			</a> &nbsp;
+		</c:when>
+    </c:choose>
+<%--===========================================================================
+This way we define the settings anchor.
+===========================================================================--%>
+	<a href="controller?command=viewSettings">
+		<fmt:message key="header_jspf.anchor.settings" bundle="${lang}"/>
+	</a> &nbsp;
+
+</div>
+
+<%--=========================================================================== 
+This way we define the menu located at the right of header. 
+===========================================================================--%> 
+<div id="rightHeader" >
+
+<%--===========================================================================
+Type user name if the user object is presented in the current session.
+===========================================================================--%>
+	<c:out value="${user.firstName} ${user.lastName}"/>
+
+<%--===========================================================================
+Type user role name if the user object is presented in the current session.
+===========================================================================--%>
+	<c:if test="${not empty userRole}">
+		<c:out value="(${userRole.toString()})"/>
+	</c:if>
+
+<%--===========================================================================
+Type link to logout
+===========================================================================--%>
+	<a href="controller?command=logout">
+		<fmt:message key="header_jspf.anchor.logout" bundle="${lang}"/>
+	</a>
+
+</div>
+</c:if>
+
+<c:if test="${empty user and title ne 'Login'}">
+	<div id="rightHeader">
+		<a href="index.jsp">
+			<fmt:message key="header_jspf.anchor.login" bundle="${lang}"/>
+		</a>
+	</div>
+</c:if>
+
+	</td>
+</tr>
+
