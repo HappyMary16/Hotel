@@ -1,2 +1,2 @@
 # Hotel
-Room online booing system
+Room online booking system
